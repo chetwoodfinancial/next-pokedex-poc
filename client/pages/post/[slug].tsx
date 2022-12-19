@@ -22,7 +22,17 @@ const ptComponents = {
   },
 };
 
-const Post = ({ post }) => {
+type Props = {
+  post: {
+    title: string;
+    name: string;
+    categories: string[];
+    authorImage: any;
+    body: any;
+  };
+};
+
+const Post = ({ post }: Props) => {
   const {
     title = "Missing title",
     name = "Missing name",
