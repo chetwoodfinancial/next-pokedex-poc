@@ -1,24 +1,36 @@
 import groq from "groq";
 import imageUrlBuilder from "@sanity/image-url";
 import { PortableText } from "@portabletext/react";
+
 import client from "../../client";
+
+// type definition for urlFor function
+// type UrlFor = (source: any) => string;
 
 const urlFor = (source) => imageUrlBuilder(client).image(source);
 
 const ptComponents = {
   types: {
-    image: ({ value }) => {
-      if (!value?.asset?._ref) {
-        return null;
-      }
-      return (
-        <img
-          alt={value.alt || " "}
-          loading="lazy"
-          src={urlFor(value).width(320).height(240).fit("max").auto("format")}
-        />
-      );
-    },
+    image: ({ value }) => <img src={value.imageUrl} />,
+
+    // image: ({ value }) => {
+    //   if (!value?.asset?._ref) {
+    //     return null;
+    //   }
+    //   return (
+    //     <Image
+    //       alt={value.alt || " "}
+    //       loading="lazy"
+    //       // src={urlFor(value).width(320).height(240).fit("max").auto("format")}
+    //       src={imageUrlBuilder(client)
+    //         .image(value)
+    //         .width(320)
+    //         .height(240)
+    //         .fit("max")
+    //         .auto("format")}
+    //     />
+    //   );
+    // },
   },
 };
 
@@ -39,7 +51,7 @@ const Post = ({ post }: Props) => {
     categories,
     authorImage,
     body = [],
-  } = post;
+  } = post || {};
   return (
     <article>
       <h1>{title}</h1>
