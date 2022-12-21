@@ -3,9 +3,9 @@ import groq from "groq";
 import client from "../client";
 
 type Props = {
-  posts: Array<{
+  chetmons: Array<{
     _id: string;
-    title: string;
+    name: string;
     slug: {
       current: string;
     };
@@ -13,17 +13,17 @@ type Props = {
   }>;
 };
 
-const Index = ({ posts }: Props) => {
+const Index = ({ chetmons }: Props) => {
   return (
     <div>
-      <h1>Welcome to a blog!</h1>
-      {posts.length > 0 &&
-        posts.map(
-          ({ _id, title = "", slug = { current: "" }, publishedAt = "" }) =>
+      <h1 className="text-3xl font-bold underline">Welcome to a blog!</h1>
+      {chetmons.length > 0 &&
+        chetmons.map(
+          ({ _id, name = "", slug = { current: "" }, publishedAt = "" }) =>
             slug && (
               <li key={_id}>
-                <Link href="/post/[slug]" as={`/post/${slug.current}`}>
-                  {title}
+                <Link href="/chetmon/[slug]" as={`/chetmon/${slug.current}`}>
+                  {name}
                 </Link>{" "}
                 ({new Date(publishedAt).toDateString()})
               </li>
@@ -34,12 +34,12 @@ const Index = ({ posts }: Props) => {
 };
 
 export async function getStaticProps() {
-  const posts = await client.fetch(groq`
-      *[_type == "post" && publishedAt < now()] | order(publishedAt desc)
+  const chetmons = await client.fetch(groq`
+      *[_type == "chetmon" && publishedAt < now()] | order(publishedAt desc)
     `);
   return {
     props: {
-      posts,
+      chetmons,
     },
     revalidate: 10,
   };

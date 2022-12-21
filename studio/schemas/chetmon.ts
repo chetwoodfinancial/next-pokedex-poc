@@ -1,13 +1,13 @@
 import {defineField, defineType} from 'sanity'
 
 export default defineType({
-  name: 'post',
-  title: 'Post',
+  name: 'chetmon',
+  title: 'Chetmon',
   type: 'document',
   fields: [
     defineField({
-      name: 'title',
-      title: 'Title',
+      name: 'name',
+      title: 'Name',
       type: 'string',
     }),
     defineField({
@@ -40,20 +40,26 @@ export default defineType({
       of: [{type: 'reference', to: {type: 'category'}}],
     }),
     defineField({
+      name: 'abilities',
+      title: 'Abilities',
+      type: 'array',
+      of: [{type: 'reference', to: {type: 'ability'}}],
+    }),
+    defineField({
       name: 'publishedAt',
       title: 'Published at',
       type: 'datetime',
     }),
     defineField({
-      name: 'body',
-      title: 'Body',
+      name: 'description',
+      title: 'Description',
       type: 'blockContent',
     }),
   ],
 
   preview: {
     select: {
-      title: 'title',
+      title: 'name',
       creator: 'creator.name',
       media: 'mainImage',
     },

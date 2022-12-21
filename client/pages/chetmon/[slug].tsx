@@ -35,27 +35,40 @@ const ptComponents = {
 };
 
 type Props = {
-  post: {
-    title: string;
+  chetmon: {
     name: string;
+    creator: string;
     categories: string[];
+    abilities: string[];
     authorImage: any;
-    body: any;
+    mainImage: any;
+    description: any;
   };
 };
 
-const Post = ({ post }: Props) => {
+const Chetmon = ({ chetmon }: Props) => {
   const {
-    title = "Missing title",
-    name = "Missing name",
+    name,
+    creator,
     categories,
+    abilities,
     authorImage,
-    body = [],
-  } = post || {};
+    mainImage,
+    description,
+  } = chetmon || {};
+  console.log({ chetmon });
   return (
     <article>
-      <h1>{title}</h1>
-      <span>By {name}</span>
+      <h1>{name}</h1>
+      {mainImage && (
+        <div>
+          <img
+            src={urlFor(mainImage).width(200).url()}
+            alt={`${name}'s picture`}
+          />
+        </div>
+      )}
+      <span>By {creator}</span>
       {categories && (
         <ul>
           Posted in
@@ -64,30 +77,33 @@ const Post = ({ post }: Props) => {
           ))}
         </ul>
       )}
-      {authorImage && (
-        <div>
-          <img
-            src={urlFor(authorImage).width(200).url()}
-            alt={`${name}'s picture`}
-          />
-        </div>
+      {abilities && (
+        <ul>
+          Abilities:
+          {abilities.map((ability) => (
+            <li key={ability}>{ability}</li>
+          ))}
+        </ul>
       )}
-      <PortableText value={body} components={ptComponents} />
+
+      <PortableText value={description} components={ptComponents} />
     </article>
   );
 };
 
-const query = groq`*[_type == "post" && slug.current == $slug][0]{
-  title,
-  "name": author->name,
+const query = groq`*[_type == "chetmon" && slug.current == $slug][0]{
+  name,
+  "creator": creator->name,
   "categories": categories[]->title,
+  "abilities": abilities[]->title,
   "authorImage": author->image,
-  body
+  "mainImage": mainImage,
+  description
 }`;
 
 export async function getStaticPaths() {
   const paths = await client.fetch(
-    groq`*[_type == "post" && defined(slug.current)][].slug.current`
+    groq`*[_type == "chetmon" && defined(slug.current)][].slug.current`
   );
 
   return {
@@ -99,12 +115,12 @@ export async function getStaticPaths() {
 export async function getStaticProps(context) {
   // It's important to default the slug so that it doesn't return "undefined"
   const { slug = "" } = context.params;
-  const post = await client.fetch(query, { slug });
+  const chetmon = await client.fetch(query, { slug });
   return {
     props: {
-      post,
+      chetmon,
     },
     revalidate: 10,
   };
 }
-export default Post;
+export default Chetmon;
