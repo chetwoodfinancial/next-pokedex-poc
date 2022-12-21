@@ -39,7 +39,7 @@ type Props = {
     name: string;
     creator: string;
     categories: string[];
-    abilities: string[];
+    abilities: object[];
     authorImage: any;
     mainImage: any;
     description: any;
@@ -57,36 +57,43 @@ const Chetmon = ({ chetmon }: Props) => {
     description,
   } = chetmon || {};
   console.log({ chetmon });
-  return (
-    <article>
-      <h1>{name}</h1>
-      {mainImage && (
-        <div>
-          <img
-            src={urlFor(mainImage).width(200).url()}
-            alt={`${name}'s picture`}
-          />
-        </div>
-      )}
-      <span>By {creator}</span>
-      {categories && (
-        <ul>
-          Posted in
-          {categories.map((category) => (
-            <li key={category}>{category}</li>
-          ))}
-        </ul>
-      )}
-      {abilities && (
-        <ul>
-          Abilities:
-          {abilities.map((ability) => (
-            <li key={ability}>{ability}</li>
-          ))}
-        </ul>
-      )}
 
-      <PortableText value={description} components={ptComponents} />
+  return (
+    <article className="text-white">
+      <div className="w-full flex flex-row justify-center">
+        <div className="max-w-lg flex flex-col items-center w-100 h-90 text-white px-2 pt-2 pb-4 bg-gray-700 mt-10 m-5 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
+          <h1 className="text-5xl font-bold my-5">{name}</h1>
+          {mainImage && (
+            <div className="mb-2">
+              <img
+                src={urlFor(mainImage).width(300).url()}
+                alt={`${name}'s picture`}
+              />
+            </div>
+          )}
+          <span className="text-xs">By {creator}</span>
+          <div className="flex flex-row items-center">
+            <div className="mr-5">
+              {abilities && (
+                <ul className="mt-5">
+                  <h2 className="text-bold">Abilities:</h2>
+                  {abilities.map((ability) => (
+                    <li key={ability.title}>
+                      <h3>{ability.title}</h3>
+                      <p>{ability.description}</p>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+
+            <div className="ml-5">
+              <h2 className="text-bold">Description:</h2>
+              <PortableText value={description} components={ptComponents} />
+            </div>
+          </div>
+        </div>
+      </div>
     </article>
   );
 };
@@ -95,7 +102,7 @@ const query = groq`*[_type == "chetmon" && slug.current == $slug][0]{
   name,
   "creator": creator->name,
   "categories": categories[]->title,
-  "abilities": abilities[]->title,
+  "abilities": abilities[]->{title, description},
   "authorImage": author->image,
   "mainImage": mainImage,
   description
