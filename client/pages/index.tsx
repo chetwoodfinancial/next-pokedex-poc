@@ -23,7 +23,7 @@ type Props = {
 const Index = ({ chetmons }: Props) => {
   console.log({ chetmons });
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center pt-20">
       <h1 className="text-5xl text-white font-bold mb-4">
         Welcome to the Chetmons!
       </h1>
