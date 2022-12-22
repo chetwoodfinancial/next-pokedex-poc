@@ -15,10 +15,5 @@ export default defineType({
       title: 'Description',
       type: 'text',
     }),
-    defineField({
-      name: 'generation',
-      title: 'Generation',
-      type: 'string',
-    }),
   ],
 })

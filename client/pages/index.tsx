@@ -21,13 +21,12 @@ type Props = {
 };
 
 const Index = ({ chetmons }: Props) => {
-  console.log({ chetmons });
   return (
     <div className="flex flex-col items-center pt-20">
       <h1 className="text-5xl text-white font-bold mb-4">
         Welcome to the Chetmons!
       </h1>
-      <ul className="flex flex-row">
+      <ul className="flex flex-row flex-wrap max-w-4xl">
         {chetmons.length > 0 &&
           chetmons.map(
             (chetmon) =>

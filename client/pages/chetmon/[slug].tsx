@@ -34,12 +34,18 @@ const ptComponents = {
   },
 };
 
+// Define an interface for the object type
+interface Ability {
+  title: string;
+  description: string;
+}
+
 type Props = {
   chetmon: {
     name: string;
     creator: string;
     categories: string[];
-    abilities: object[];
+    abilities: Array<Ability>;
     authorImage: any;
     mainImage: any;
     description: any;
@@ -56,7 +62,6 @@ const Chetmon = ({ chetmon }: Props) => {
     mainImage,
     description,
   } = chetmon || {};
-  console.log({ chetmon });
 
   return (
     <article className="text-white">
@@ -64,31 +69,31 @@ const Chetmon = ({ chetmon }: Props) => {
         <div className="max-w-lg flex flex-col items-center w-100 h-90 text-white px-2 pt-2 pb-4 bg-gray-700 mt-10 m-5 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
           <h1 className="text-5xl font-bold my-5">{name}</h1>
           {mainImage && (
-            <div className="mb-2">
+            <div className="my-5">
               <img
                 src={urlFor(mainImage).width(300).url()}
                 alt={`${name}'s picture`}
               />
             </div>
           )}
-          <span className="text-xs">By {creator}</span>
-          <div className="flex flex-row items-center">
-            <div className="mr-5">
+          <span className="text-gray-400 text-xs">By {creator}</span>
+          <div className="flex flex-row items-center divide-x divide-gray-400 mt-8">
+            <div className="mr-5 px-4">
               {abilities && (
-                <ul className="mt-5">
-                  <h2 className="text-bold">Abilities:</h2>
+                <ul className="flex flex-col justify-between">
+                  <h2 className="text-bold mb-2">Abilities:</h2>
                   {abilities.map((ability) => (
                     <li key={ability.title}>
                       <h3>{ability.title}</h3>
-                      <p>{ability.description}</p>
+                      <p className="text-xs">{ability.description}</p>
                     </li>
                   ))}
                 </ul>
               )}
             </div>
 
-            <div className="ml-5">
-              <h2 className="text-bold">Description:</h2>
+            <div className="ml-5 px-4 flex flex-col justify-between">
+              <h2 className="text-bold mb-2">Description:</h2>
               <PortableText value={description} components={ptComponents} />
             </div>
           </div>

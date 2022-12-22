@@ -6,7 +6,6 @@
 @layer base {
   body {
     background-color: rgb(17 24 39);
-    color: "white !important";
     font-family: "poppins", sans-serif;
   }
   h1 {
