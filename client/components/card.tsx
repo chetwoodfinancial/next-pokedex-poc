@@ -9,7 +9,7 @@ const Card = ({ chetmon }) => {
   const { _id, name, slug, abilities, creator, mainImage } = chetmon || {};
   return (
     <li
-      className="block max-w-sm w-60 h-90 text-white px-2 pt-2 pb-4 m-5 rounded-lg shadow-md hover:bg-gray-500 dark:bg-slate-800 dark:border-gray-700 dark:hover:bg-gray-700"
+      className="block max-w-sm w-60 h-90 text-white px-2 pt-2 pb-4 m-5 rounded-lg shadow-2xl hover:bg-gray-500 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
       key={_id}
     >
       <Link
@@ -36,7 +36,7 @@ const Card = ({ chetmon }) => {
               <ul>
                 {abilities.map((ability) => (
                   <li key={ability} className="text-xs">
-                    {ability}
+                    <i>{ability}</i>
                   </li>
                 ))}
               </ul>

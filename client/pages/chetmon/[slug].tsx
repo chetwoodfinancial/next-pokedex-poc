@@ -81,11 +81,13 @@ const Chetmon = ({ chetmon }: Props) => {
             <div className="mr-5 px-4">
               {abilities && (
                 <ul className="flex flex-col justify-between">
-                  <h2 className="text-bold mb-2">Abilities:</h2>
+                  <h2 className="text-bold mb-2 text-xl">Abilities</h2>
                   {abilities.map((ability) => (
-                    <li key={ability.title}>
+                    <li className="mb-4" key={ability.title}>
                       <h3>{ability.title}</h3>
-                      <p className="text-xs">{ability.description}</p>
+                      <p className="text-xs italic text-gray-400">
+                        {ability.description}
+                      </p>
                     </li>
                   ))}
                 </ul>
@@ -93,7 +95,7 @@ const Chetmon = ({ chetmon }: Props) => {
             </div>
 
             <div className="ml-5 px-4 flex flex-col justify-between">
-              <h2 className="text-bold mb-2">Description:</h2>
+              <h2 className="text-bold mb-2 text-xl">Description</h2>
               <PortableText value={description} components={ptComponents} />
             </div>
           </div>
