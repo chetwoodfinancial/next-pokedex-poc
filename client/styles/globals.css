@@ -8,10 +8,4 @@
     background-color: rgb(17 24 39);
     font-family: "poppins", sans-serif;
   }
-  h1 {
-    @apply text-2xl;
-  }
-  h2 {
-    @apply text-xl;
-  }
 }

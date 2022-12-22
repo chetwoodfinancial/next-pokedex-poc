@@ -1,9 +1,6 @@
 import Link from "next/link";
-import imageUrlBuilder from "@sanity/image-url";
 
-import client from "../client";
-
-const urlFor = (source) => imageUrlBuilder(client).image(source);
+import { urlFor } from "../utils";
 
 const Card = ({ chetmon }) => {
   const { _id, name, slug, abilities, creator, mainImage } = chetmon || {};

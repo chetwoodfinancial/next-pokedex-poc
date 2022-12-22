@@ -1,36 +1,12 @@
 import groq from "groq";
-import imageUrlBuilder from "@sanity/image-url";
 import { PortableText } from "@portabletext/react";
 
 import client from "../../client";
-
-// type definition for urlFor function
-// type UrlFor = (source: any) => string;
-
-const urlFor = (source) => imageUrlBuilder(client).image(source);
+import { urlFor } from "../../utils";
 
 const ptComponents = {
   types: {
     image: ({ value }) => <img src={value.imageUrl} />,
-
-    // image: ({ value }) => {
-    //   if (!value?.asset?._ref) {
-    //     return null;
-    //   }
-    //   return (
-    //     <Image
-    //       alt={value.alt || " "}
-    //       loading="lazy"
-    //       // src={urlFor(value).width(320).height(240).fit("max").auto("format")}
-    //       src={imageUrlBuilder(client)
-    //         .image(value)
-    //         .width(320)
-    //         .height(240)
-    //         .fit("max")
-    //         .auto("format")}
-    //     />
-    //   );
-    // },
   },
 };
 
@@ -53,20 +29,12 @@ type Props = {
 };
 
 const Chetmon = ({ chetmon }: Props) => {
-  const {
-    name,
-    creator,
-    categories,
-    abilities,
-    authorImage,
-    mainImage,
-    description,
-  } = chetmon || {};
+  const { name, creator, abilities, mainImage, description } = chetmon || {};
 
   return (
     <article className="text-white">
       <div className="w-full flex flex-row justify-center">
-        <div className="max-w-lg flex flex-col items-center w-100 h-90 text-white px-2 pt-2 pb-4 bg-gray-700 mt-10 m-5 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
+        <div className="max-w-lg flex flex-col items-center w-100 h-90 text-white px-2 pt-2 pb-4 bg-gray-700 mt-10 m-5 rounded-lg shadow-2xl dark:bg-gray-800 dark:border-gray-700">
           <h1 className="text-5xl font-bold my-5">{name}</h1>
           {mainImage && (
             <div className="my-5">
